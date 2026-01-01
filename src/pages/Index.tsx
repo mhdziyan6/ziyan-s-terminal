@@ -1,5 +1,5 @@
-import { useState, useCallback } from 'react';
-import { LoadingScreen } from '@/components/LoadingScreen';
+import { useState, useCallback, useEffect } from 'react';
+import { InitialTerminal } from '@/components/InitialTerminal';
 import { Navigation } from '@/components/Navigation';
 import { HeroSection } from '@/components/HeroSection';
 import { AboutSection } from '@/components/AboutSection';
@@ -11,16 +11,23 @@ import { HobbiesSection } from '@/components/HobbiesSection';
 import { ContactSection } from '@/components/ContactSection';
 import { Helmet } from 'react-helmet-async';
 
-const Index = () => {
-  const [isLoading, setIsLoading] = useState(true);
+type AppState = 'initial' | 'transitioning' | 'ready';
 
-  const handleLoadingComplete = useCallback(() => {
-    setIsLoading(false);
+const Index = () => {
+  const [appState, setAppState] = useState<AppState>(() => {
+    // Check if user has already seen the intro this session
+    const hasSeenIntro = sessionStorage.getItem('hasSeenIntro');
+    return hasSeenIntro ? 'ready' : 'initial';
+  });
+
+  const handleRun = useCallback(() => {
+    setAppState('transitioning');
+    sessionStorage.setItem('hasSeenIntro', 'true');
   }, []);
 
-  if (isLoading) {
-    return <LoadingScreen onComplete={handleLoadingComplete} />;
-  }
+  const handleTransitionEnd = useCallback(() => {
+    setAppState('ready');
+  }, []);
 
   return (
     <>
@@ -44,11 +51,24 @@ const Index = () => {
         <link rel="canonical" href="https://mohammedziyan.dev" />
       </Helmet>
 
-      <div className="min-h-screen bg-background">
+      {/* Initial terminal screen */}
+      {appState === 'initial' && (
+        <InitialTerminal onRun={handleRun} />
+      )}
+
+      {/* Main content */}
+      <div 
+        className={`min-h-screen bg-background transition-opacity duration-300 ${
+          appState === 'initial' ? 'opacity-0 pointer-events-none' : 'opacity-100'
+        }`}
+      >
         <Navigation />
         
         <main>
-          <HeroSection />
+          <HeroSection 
+            transitionComplete={appState === 'transitioning' || appState === 'ready'} 
+            onTransitionEnd={handleTransitionEnd}
+          />
           <AboutSection />
           <ExperienceSection />
           <SkillsSection />

@@ -1,11 +1,10 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback } from 'react';
 import { InitialTerminal } from '@/components/InitialTerminal';
 import { Navigation } from '@/components/Navigation';
 import { HeroSection } from '@/components/HeroSection';
 import { AboutSection } from '@/components/AboutSection';
 import { ExperienceSection } from '@/components/ExperienceSection';
 import { SkillsSection } from '@/components/SkillsSection';
-import { GitHubActivity } from '@/components/GitHubActivity';
 import { ProjectsSection } from '@/components/ProjectsSection';
 import { HobbiesSection } from '@/components/HobbiesSection';
 import { ContactSection } from '@/components/ContactSection';
@@ -15,7 +14,6 @@ type AppState = 'initial' | 'transitioning' | 'ready';
 
 const Index = () => {
   const [appState, setAppState] = useState<AppState>(() => {
-    // Check if user has already seen the intro this session
     const hasSeenIntro = sessionStorage.getItem('hasSeenIntro');
     return hasSeenIntro ? 'ready' : 'initial';
   });
@@ -51,12 +49,10 @@ const Index = () => {
         <link rel="canonical" href="https://mohammedziyan.dev" />
       </Helmet>
 
-      {/* Initial terminal screen */}
       {appState === 'initial' && (
         <InitialTerminal onRun={handleRun} />
       )}
 
-      {/* Main content */}
       <div 
         className={`min-h-screen bg-background transition-opacity duration-300 ${
           appState === 'initial' ? 'opacity-0 pointer-events-none' : 'opacity-100'
@@ -72,7 +68,6 @@ const Index = () => {
           <AboutSection />
           <ExperienceSection />
           <SkillsSection />
-          <GitHubActivity />
           <ProjectsSection />
           <HobbiesSection />
           <ContactSection />

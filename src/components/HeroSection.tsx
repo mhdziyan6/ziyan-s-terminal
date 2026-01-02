@@ -153,14 +153,17 @@ export const HeroSection = ({ transitionComplete, onTransitionEnd }: HeroSection
 
               {/* Output */}
               <div className="space-y-1">
-                {displayedLines.map((line, index) => (
-                  <div
-                    key={index}
-                    className={`${getLineColor(line.type)} ${line.type === 'blank' ? 'h-4' : ''}`}
-                  >
-                    {line.text}
-                  </div>
-                ))}
+                {displayedLines.map((line, index) => {
+                  if (!line) return null;
+                  return (
+                    <div
+                      key={index}
+                      className={`${getLineColor(line.type)} ${line.type === 'blank' ? 'h-4' : ''}`}
+                    >
+                      {line.text}
+                    </div>
+                  );
+                })}
                 
                 {/* Typing indicator */}
                 {isTyping && (

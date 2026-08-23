@@ -1,93 +1,99 @@
-import { Mail, Github, Linkedin, FileDown, ArrowUp } from 'lucide-react';
+import React, { useState } from 'react';
 
 export const ContactSection = () => {
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
+  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+  const [status, setStatus] = useState<'idle' | 'submitting' | 'success'>('idle');
 
-  const downloadResume = () => {
-    const link = document.createElement('a');
-    link.href = '/Mohammed_Ziyan_Resume.pdf';
-    link.download = 'Mohammed_Ziyan_Resume.pdf';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setStatus('submitting');
+    // Simulate form submission
+    setTimeout(() => {
+      setStatus('success');
+      setFormData({ name: '', email: '', message: '' });
+      setTimeout(() => setStatus('idle'), 3000);
+    }, 1500);
   };
 
   return (
-    <section id="contact" className="py-20 md:py-28">
+    <section id="contact" className="py-24 md:py-32 border-t border-border">
       <div className="section-container">
-        <div className="mb-12 text-center">
-          <p className="section-subtitle mb-2">// contact</p>
-          <h2 className="section-title">Get In Touch</h2>
-          <p className="text-muted-foreground mt-4 max-w-xl mx-auto">
-            Looking for a developer who builds secure, scalable applications? 
-            Let's connect and discuss how I can contribute to your team.
-          </p>
-        </div>
-
-        {/* Contact links */}
-        <div className="flex flex-wrap justify-center gap-4 mb-12">
-          <a
-            href="mailto:ziyandaniel0@gmail.com"
-            className="btn-terminal flex items-center gap-2 rounded-md"
-          >
-            <Mail size={18} />
-            ziyandaniel0@gmail.com
-          </a>
-
-          <a
-            href="https://github.com/ziyandaniel"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn-terminal flex items-center gap-2 rounded-md"
-          >
-            <Github size={18} />
-            GitHub
-          </a>
-
-          <a
-            href="https://linkedin.com/in/ziyandaniel"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn-terminal flex items-center gap-2 rounded-md"
-          >
-            <Linkedin size={18} />
-            LinkedIn
-          </a>
-        </div>
-
-        {/* Resume download */}
-        <div className="text-center mb-16">
-          <button
-            onClick={downloadResume}
-            className="btn-terminal-solid flex items-center gap-2 rounded-md mx-auto"
-          >
-            <FileDown size={18} />
-            Download Resume
-          </button>
-        </div>
-
-        {/* Footer */}
-        <footer className="border-t border-border pt-8">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-            <p className="text-sm text-muted-foreground font-mono">
-              <span className="text-terminal-prompt">$</span> Built with React + Tailwind
+        <div className="flex flex-col lg:flex-row gap-16 lg:gap-24">
+          <div className="lg:w-1/3">
+            <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-6">
+              Let's connect
+            </h2>
+            <p className="text-lg text-muted-foreground mb-12">
+              Looking for a developer who builds secure, scalable applications? 
+              I'm open to new opportunities.
             </p>
-
-            <p className="text-sm text-muted-foreground">
-              © {new Date().getFullYear()} Mohammed Ziyan
-            </p>
-
-            <button
-              onClick={scrollToTop}
-              className="p-2 text-muted-foreground hover:text-primary transition-colors"
-              aria-label="Scroll to top"
-            >
-              <ArrowUp size={20} />
-            </button>
+            
+            <div className="space-y-6">
+              <div>
+                <p className="text-sm text-muted-foreground uppercase tracking-wider font-medium mb-1">Email</p>
+                <a href="mailto:mhdziyannn@gmail.com" className="text-xl text-foreground hover:text-primary transition-colors">
+                  mhdziyannn@gmail.com
+                </a>
+              </div>
+              <div>
+                <p className="text-sm text-muted-foreground uppercase tracking-wider font-medium mb-1">Phone</p>
+                <a href="tel:+918330047223" className="text-xl text-foreground hover:text-primary transition-colors">
+                  +91 83300 47223
+                </a>
+              </div>
+            </div>
           </div>
-        </footer>
+          
+          <div className="lg:w-2/3">
+            <form onSubmit={handleSubmit} className="space-y-6 bg-surface-2 p-8 md:p-10 rounded-2xl border border-border/50">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <label htmlFor="name" className="text-sm font-medium text-foreground">Name</label>
+                  <input 
+                    type="text" 
+                    id="name"
+                    required
+                    value={formData.name}
+                    onChange={(e) => setFormData({...formData, name: e.target.value})}
+                    className="w-full bg-surface-3 border border-border rounded-lg px-4 py-3 text-foreground focus:outline-none focus:border-primary/50 transition-colors"
+                    placeholder="John Doe"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label htmlFor="email" className="text-sm font-medium text-foreground">Email</label>
+                  <input 
+                    type="email" 
+                    id="email"
+                    required
+                    value={formData.email}
+                    onChange={(e) => setFormData({...formData, email: e.target.value})}
+                    className="w-full bg-surface-3 border border-border rounded-lg px-4 py-3 text-foreground focus:outline-none focus:border-primary/50 transition-colors"
+                    placeholder="john@example.com"
+                  />
+                </div>
+              </div>
+              <div className="space-y-2">
+                <label htmlFor="message" className="text-sm font-medium text-foreground">Message</label>
+                <textarea 
+                  id="message"
+                  required
+                  rows={5}
+                  value={formData.message}
+                  onChange={(e) => setFormData({...formData, message: e.target.value})}
+                  className="w-full bg-surface-3 border border-border rounded-lg px-4 py-3 text-foreground focus:outline-none focus:border-primary/50 transition-colors resize-none"
+                  placeholder="How can I help you?"
+                />
+              </div>
+              <button 
+                type="submit" 
+                disabled={status === 'submitting'}
+                className="btn-primary w-full md:w-auto mt-2 disabled:opacity-50"
+              >
+                {status === 'submitting' ? 'Sending...' : status === 'success' ? 'Message Sent!' : 'Send Message'}
+              </button>
+            </form>
+          </div>
+        </div>
       </div>
     </section>
   );

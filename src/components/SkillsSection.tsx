@@ -1,104 +1,51 @@
-import { Code2, Server, Database, Wrench, Shield } from 'lucide-react';
+import React from 'react';
 
 const skillCategories = [
   {
-    title: 'Frontend',
-    icon: Code2,
-    color: 'text-primary',
-    bgColor: 'bg-primary/10',
-    skills: ['React', 'React Native', 'TypeScript', 'JavaScript', 'HTML/CSS', 'Tailwind', 'Flutter'],
+    category: "Languages",
+    skills: ["Python", "Java", "C", "SQL", "PHP", "JavaScript", "TypeScript", "R"]
   },
   {
-    title: 'Backend',
-    icon: Server,
-    color: 'text-secondary',
-    bgColor: 'bg-secondary/10',
-    skills: ['Python', 'FastAPI', 'Flask', 'Django', 'Node.js', 'Java', 'PHP'],
+    category: "Frameworks",
+    skills: ["React", "React Native", "Node.js", "Next.js", "Express.js", "FastAPI", "Tailwind", "Flutter"]
   },
   {
-    title: 'Databases',
-    icon: Database,
-    color: 'text-terminal-info',
-    bgColor: 'bg-terminal-info/10',
-    skills: ['PostgreSQL', 'MySQL', 'MongoDB', 'Supabase', 'NeonDB'],
+    category: "Databases",
+    skills: ["MySQL", "MongoDB", "PostgreSQL", "Supabase", "Redis"]
   },
   {
-    title: 'Tools & Platforms',
-    icon: Wrench,
-    color: 'text-purple-400',
-    bgColor: 'bg-purple-400/10',
-    skills: ['Git', 'GitHub Actions', 'Docker', 'Postman', 'Figma', 'Vercel', 'Render', 'n8n'],
-  },
-];
-
-const learningSkills = [
-  'Penetration Testing',
-  'Security Analysis',
-  'Vulnerability Assessment',
-  'Network Security',
-  'OWASP Principles',
-  'Dynamic Analysis',
+    category: "Design & Tools",
+    skills: ["Git", "GitHub Actions", "Postman", "n8n", "Canva", "Docker", "Vercel", "Render", "Notion", "IoT", "VMware"]
+  }
 ];
 
 export const SkillsSection = () => {
   return (
-    <section id="skills" className="py-20 md:py-28">
+    <section id="skills" className="py-24 border-t border-border">
       <div className="section-container">
-        <div className="mb-12">
-          <p className="section-subtitle mb-2">// skills</p>
-          <h2 className="section-title">Technical Skills</h2>
-        </div>
-
-        {/* Core Skills Grid */}
-        <div className="grid md:grid-cols-2 gap-6 mb-12">
-          {skillCategories.map((category, index) => {
-            const Icon = category.icon;
-            return (
-              <div key={index} className="card-elevated">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className={`p-2 ${category.bgColor} rounded-lg`}>
-                    <Icon className={category.color} size={20} />
-                  </div>
-                  <h3 className="font-semibold text-foreground">{category.title}</h3>
-                </div>
-
-                <div className="flex flex-wrap gap-2">
-                  {category.skills.map((skill, sIndex) => (
-                    <span key={sIndex} className="skill-badge">
-                      {skill}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            );
-          })}
-        </div>
-
-        {/* Learning Section */}
-        <div className="card-elevated border-terminal-warn/30">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 bg-terminal-warn/10 rounded-lg">
-              <Shield className="text-terminal-warn" size={20} />
-            </div>
-            <div>
-              <h3 className="font-semibold text-foreground">Learning & Growing</h3>
-              <p className="text-xs text-terminal-warn font-mono">IN PROGRESS</p>
-            </div>
+        <div className="flex flex-col md:flex-row gap-12 md:gap-24">
+          <div className="md:w-1/3">
+            <h2 className="text-3xl md:text-5xl font-bold tracking-tight">Skills</h2>
           </div>
-
-          <p className="text-sm text-muted-foreground mb-4">
-            Actively building cybersecurity foundations through coursework and hands-on exploration.
-          </p>
-
-          <div className="flex flex-wrap gap-2">
-            {learningSkills.map((skill, index) => (
-              <span
-                key={index}
-                className="px-3 py-1.5 text-sm rounded-md font-medium bg-terminal-warn/10 border border-terminal-warn/30 text-terminal-warn"
-              >
-                {skill}
-              </span>
-            ))}
+          
+          <div className="md:w-2/3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-12">
+              {skillCategories.map((group, index) => (
+                <div key={index} className="space-y-4">
+                  <h3 className="text-lg font-semibold text-foreground border-b border-border/50 pb-2">
+                    {group.category}
+                  </h3>
+                  <ul className="space-y-2">
+                    {group.skills.map((skill, i) => (
+                      <li key={i} className="text-muted-foreground flex items-center gap-2">
+                        <span className="w-1 h-1 rounded-full bg-foreground/30"></span>
+                        {skill}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>

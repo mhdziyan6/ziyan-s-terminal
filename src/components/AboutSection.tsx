@@ -1,69 +1,46 @@
-import { User, Target, Code } from 'lucide-react';
+import React from 'react';
 
 export const AboutSection = () => {
   return (
-    <section id="about" className="py-20 md:py-28">
+    <section id="about" className="py-24 md:py-32 border-t border-border">
       <div className="section-container">
-        <div className="mb-12">
-          <p className="section-subtitle mb-2">// about_me</p>
-          <h2 className="section-title">Who I Am</h2>
-        </div>
-
-        <div className="grid md:grid-cols-3 gap-6">
-          {/* Background */}
-          <div className="card-elevated">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="p-2 bg-primary/10 rounded-lg">
-                <User className="text-primary" size={20} />
-              </div>
-              <h3 className="font-semibold text-foreground">Background</h3>
-            </div>
-            <p className="text-muted-foreground text-sm leading-relaxed">
-              I'm a B.Tech Information Technology student at Amal Jyothi College of Engineering, 
-              graduating in 2026. My path into tech wasn't conventional — I've always been drawn 
-              to understanding how systems work beneath the surface, from debugging code to 
-              dissecting network packets.
-            </p>
+        <div className="flex flex-col lg:flex-row gap-12 lg:gap-24">
+          
+          <div className="lg:w-1/3">
+            <h2 className="text-4xl md:text-5xl font-bold tracking-tight sticky top-32">
+              About
+            </h2>
           </div>
-
-          {/* What I Do */}
-          <div className="card-elevated">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="p-2 bg-secondary/20 rounded-lg">
-                <Code className="text-secondary" size={20} />
+          
+          <div className="lg:w-2/3">
+            <div className="prose prose-invert prose-lg max-w-none text-muted-foreground">
+              <p className="text-xl md:text-2xl text-foreground font-medium leading-relaxed mb-8">
+                I am a full-stack developer and security-minded builder, focused on creating scalable web applications and AI-driven platforms.
+              </p>
+              
+              <div className="space-y-6">
+                <p>
+                  With a foundation in both frontend and backend development, I build systems that solve real problems. My work ranges from engineering real-time inventory systems that cut reconciliation errors by 90%, to designing AI career guidance platforms validated by hundreds of users.
+                </p>
+                <p>
+                  Currently, I am deeply focused on the intersection of AI and application security. At SecureThreadOPS, I co-built a DevSecOps platform, fine-tuning custom LLMs to drastically reduce false-positive detection rates and catch vulnerabilities before they merge.
+                </p>
+                <p>
+                  Beyond code, I have represented product teams across investor meetings and driven survey-based UX iterations. I bring clarity to ambiguity and build solutions that deliver measurable impact.
+                </p>
               </div>
-              <h3 className="font-semibold text-foreground">What I Build</h3>
-            </div>
-            <p className="text-muted-foreground text-sm leading-relaxed">
-              I specialize in building full-stack applications that solve real problems. 
-              From AI-assisted code analysis tools to lead management systems, I focus on 
-              creating scalable solutions that handle thousands of daily requests while 
-              maintaining clean, maintainable codebases.
-            </p>
-          </div>
-
-          {/* Future Goals */}
-          <div className="card-elevated">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="p-2 bg-terminal-warn/20 rounded-lg">
-                <Target className="text-terminal-warn" size={20} />
+              
+              <div className="mt-12 p-6 bg-surface-2 border border-border/50 rounded-xl flex items-center justify-between">
+                <div>
+                  <h4 className="text-foreground font-medium text-lg mb-1">Based in</h4>
+                  <p className="text-muted-foreground flex items-center gap-2">
+                    Kerala, India
+                  </p>
+                </div>
               </div>
-              <h3 className="font-semibold text-foreground">Where I'm Headed</h3>
             </div>
-            <p className="text-muted-foreground text-sm leading-relaxed">
-              While I continue to build production-grade applications, I'm actively 
-              transitioning toward cybersecurity. Completing Google's Cybersecurity 
-              Foundations course was just the start — I'm exploring penetration testing, 
-              dynamic analysis, and security tooling as my next frontier.
-            </p>
           </div>
-        </div>
-
-        {/* Quote/Philosophy */}
-        <div className="mt-12 p-6 bg-surface-1 border border-border rounded-lg">
-          <p className="text-center text-muted-foreground font-mono text-sm">
-            <span className="text-terminal-prompt">$</span> echo "Building secure, scalable systems is not just about code — it's about understanding what could go wrong."
-          </p>
+          
         </div>
       </div>
     </section>

@@ -1,86 +1,96 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-
-const projects = [
-  {
-    title: "SecureThreadOPS",
-    role: "Full-Stack & Security Engineer",
-    date: "July 2025 – Present",
-    tech: "Python, FastAPI, React, PostgreSQL",
-    description: "Co-built an AI-powered DevSecOps platform and fine-tuned a custom LLM to 84% detection accuracy. Built a multi-language SAST engine scanning 1,900+ vulnerabilities across 5 repositories. Cut false-positive detection rate to 3.5% via AI-driven contextual risk analysis.",
-    link: "#"
-  },
-  {
-    title: "CareerWise",
-    role: "Full-Stack AI Developer",
-    date: "May 2025 – Present",
-    tech: "Python, FastAPI, React, Neo4j",
-    description: "Designed an AI career guidance platform spanning 6+ tracks, validated by 100+ users. Drove 90%+ positive feedback across 3+ user segments via survey-driven UX iteration. Integrated live LLM capabilities for dynamic, context-aware career guidance.",
-    link: "#"
-  },
-  {
-    title: "Rental Management System",
-    role: "Frontend & Systems Architect",
-    date: "March 2026 – July 2026",
-    tech: "React, Python, Supabase",
-    description: "Engineered real-time, cross-branch inventory sync with barcode scanning for rental businesses. Built an automated financial ledger, cutting reconciliation errors by 90%+. Architected the system to scale to 5,000+ SKUs across multiple branches.",
-    link: "#"
-  }
-];
+import { HoverBorderGradient } from './ui/hover-border-gradient';
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { AnimatePresence } from 'framer-motion';
+import { projects } from '../data/projects';
+import { Project } from '../types/project';
+import { ProjectDetailModal } from './ProjectDetailModal';
 
 export const ProjectsSection = () => {
+  const navigate = useNavigate();
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+
   return (
-    <section id="projects" className="py-24 md:py-32 bg-surface-1">
+    <section id="projects" className="py-24 md:py-32 bg-black text-white relative">
       <div className="section-container">
-        <div className="mb-20">
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
+        {/* Header exactly like screenshot */}
+        <div className="mb-12 flex items-center gap-3">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-normal tracking-tight text-white">
             Selected Works
           </h2>
-          <p className="text-xl text-muted-foreground max-w-2xl">
-            A mix of AI-driven platforms, security tools, and scalable business systems. 
-            All designed with structure, clarity, and intention.
-          </p>
+          <span className="text-xs md:text-sm text-zinc-400 mt-1">
+            2025-2026
+          </span>
+          <div className="w-5 h-5 rounded-full border border-zinc-700 ml-4 mt-1"></div>
         </div>
 
-        <div className="space-y-32">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-12">
           {projects.map((project, index) => (
-            <motion.div 
+            <motion.div
               key={index}
-              initial={{ opacity: 0, y: 100 }}
+              initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              className="flex flex-col gap-6 group"
+              transition={{ duration: 0.6, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
+              className="flex flex-col group cursor-pointer"
+              onClick={() => setSelectedProject(project)}
             >
-              <div className="w-full aspect-[16/9] md:aspect-[21/9] bg-surface-2 rounded-xl overflow-hidden relative border border-border/50">
-                {/* Placeholder for project images. The reference portfolio had large imagery. */}
-                <div className="absolute inset-0 flex items-center justify-center text-muted-foreground/30 font-bold text-4xl tracking-widest uppercase">
-                  {project.title}
-                </div>
-                <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              {/* Image Container (No border, no rounded corners, 16:10 aspect ratio) */}
+              <div className="w-full aspect-[16/10] bg-zinc-900 overflow-hidden relative mb-4">
+                {project.image ? (
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                ) : (
+                  <div className="absolute inset-0 flex items-center justify-center text-zinc-600 font-bold text-xl tracking-widest uppercase p-8 text-center bg-gradient-to-br from-white/5 to-transparent">
+                    {project.title}
+                  </div>
+                )}
+                <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
               </div>
-              
-              <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mt-4">
-                <div className="max-w-2xl">
-                  <h3 className="text-3xl font-bold mb-3 group-hover:text-primary transition-colors">
+
+              {/* Card Content */}
+              <div className="flex justify-between items-start">
+                <div className="flex flex-col gap-1">
+                  <h3 className="text-base md:text-lg font-normal text-white">
                     {project.title}
                   </h3>
-                  <p className="text-lg text-muted-foreground leading-relaxed">
-                    {project.description}
+                  <p className="text-sm text-zinc-400">
+                    {project.role}
                   </p>
                 </div>
-                
-                <div className="flex flex-col items-start md:items-end gap-2 text-sm font-medium uppercase tracking-wider text-muted-foreground">
-                  <span>{project.tech}</span>
-                  <a href={project.link} className="flex items-center gap-2 text-foreground hover:text-primary transition-colors mt-2">
-                    View Project <span className="text-lg leading-none">↗</span>
-                  </a>
+                <div className="text-base md:text-lg font-normal text-white">
+                  {project.year}
                 </div>
               </div>
             </motion.div>
           ))}
         </div>
+
+        <div className="mt-20 flex justify-center text-center">
+          <HoverBorderGradient
+            containerClassName="rounded-full"
+            as="button"
+            className="dark:bg-black bg-white text-black dark:text-white flex items-center space-x-2 px-8 py-3 text-sm font-medium uppercase tracking-widest"
+            onClick={() => navigate('/projects')}
+          >
+            <span>View all projects</span>
+          </HoverBorderGradient>
+        </div>
       </div>
+
+      <AnimatePresence>
+        {selectedProject && (
+          <ProjectDetailModal 
+            project={selectedProject} 
+            onClose={() => setSelectedProject(null)} 
+          />
+        )}
+      </AnimatePresence>
     </section>
   );
 };

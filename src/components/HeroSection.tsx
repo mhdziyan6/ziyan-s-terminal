@@ -14,7 +14,7 @@ export const HeroSection = () => {
             <h1
               className="mb-8 text-foreground"
               style={{
-                fontFamily: "'Bricolage Grotesque', sans-serif",
+                fontFamily: "'Bricolage Grotesque', sans-serif",  
                 fontWeight: 800,
                 lineHeight: 0.88,
                 fontSize: "clamp(4rem, 8.5vw, 9.5rem)",
